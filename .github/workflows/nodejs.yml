@@ -30,7 +30,7 @@ jobs:
         env:
           CI: true
       - name: Use Cache
-        uses: actions/cache@1
+        uses: actions/cache@v1
         with:
           path: caches
           key: bunkado-lieflet-urls-v1.json
