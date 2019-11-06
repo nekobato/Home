@@ -39,4 +39,5 @@ jobs:
           key: bunkado-lieflet-urls-v1.json
           restore-keys: bunkado-lieflet-urls-v1.json
       - name: run Bunkado
-        run: node scripts/BunkadoLeaflet.js
+        run: |
+          ./scripts/BunkadoLeaflet.js

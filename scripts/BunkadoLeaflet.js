@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const Nightmare = require('nightmare');
 const nightmare = Nightmare({ show: false });
 const fs = require('fs-extra');
