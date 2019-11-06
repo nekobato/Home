@@ -8,7 +8,7 @@ const cacheFile = __dirname + '/../caches/bunkado-lieflet-urls-v1.json';
 const slack = new IncomingWebhook(process.env.SLACK_WEBHOOK_URL);
 
 async function notify(src) {
-  await slack.send({
+  return await slack.send({
     text: src,
   });
 }
@@ -34,6 +34,7 @@ async function scrape() {
   await Promise.all(srcs.map((src) => {
     if (histories.indexOf(src) == -1) {
       histories.push(src);
+      console.log(`New leaflet: ${src}`);
       return notify(src);
     }
   }));
