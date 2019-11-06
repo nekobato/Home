@@ -15,10 +15,8 @@ async function notify(src) {
 }
 
 (async () => {
-  console.log('2');
   if (!fs.existsSync(cacheFile)) await fs.writeFile(cacheFile, JSON.stringify([]));
   const histories = require(cacheFile);
-  console.log('3');
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -37,7 +35,6 @@ async function notify(src) {
   await browser.close();
 
   await Promise.all(srcs.map((src) => {
-    console.log('5');
     if (histories.indexOf(src) == -1) {
       histories.push(src);
       console.log(`New leaflet: ${src}`);
@@ -45,7 +42,6 @@ async function notify(src) {
     }
   }));
 
-  console.log('6');
   fs.writeFileSync(cacheFile, JSON.stringify(histories));
   console.log('Done.');
 })();
