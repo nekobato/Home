@@ -1,0 +1,25 @@
+{
+  "name": "Home",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nekobato/Home.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nekobato/Home/issues"
+  },
+  "homepage": "https://github.com/nekobato/Home#readme",
+  "dependencies": {
+    "@slack/webhook": "^5.0.2",
+    "fs-extra": "^8.1.0",
+    "nightmare": "^3.0.2"
+  }
+}
