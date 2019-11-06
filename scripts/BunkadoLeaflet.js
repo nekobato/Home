@@ -44,6 +44,7 @@ async function scrape() {
   return histories;
 }
 
+console.log('hello');
 scrape()
   .then((srcLog) => {
     fs.writeFileSync(cacheFile, JSON.stringify(srcLog));
