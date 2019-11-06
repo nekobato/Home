@@ -16,8 +16,10 @@ async function notify(src) {
 }
 
 async function scrape() {
+  console.log('2');
   if (!fs.existsSync(cacheFile)) await fs.writeFile(cacheFile, JSON.stringify([]));
   const histories = require(cacheFile);
+  console.log('3');
 
   try {
     const srcs = await nightmare
@@ -33,8 +35,10 @@ async function scrape() {
         return srcs;
       })
       .end();
+    console.log('4');
 
     await Promise.all(srcs.map((src) => {
+      console.log('5');
       if (histories.indexOf(src) == -1) {
         histories.push(src);
         console.log(`New leaflet: ${src}`);
@@ -45,8 +49,10 @@ async function scrape() {
     throw(error);
   }
 
+  console.log('6');
   fs.writeFileSync(cacheFile, JSON.stringify(histories));
   console.log('Done.');
 }
 
+console.log('1');
 scrape();
