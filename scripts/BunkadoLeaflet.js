@@ -34,7 +34,10 @@ async function scrape() {
         });
         return srcs;
       })
-      .end();
+      .end()
+      .then((srcs) => {
+        return srcs;
+      });
     console.log('4');
 
     await Promise.all(srcs.map((src) => {
