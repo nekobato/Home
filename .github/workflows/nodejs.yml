@@ -2,9 +2,6 @@ name: Node CI
 
 on: [push]
 
-env:
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
 jobs:
   build:
 
@@ -41,3 +38,5 @@ jobs:
       - name: run Bunkado
         run: |
           ./scripts/BunkadoLeaflet.js
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
