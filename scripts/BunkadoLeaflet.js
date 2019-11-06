@@ -45,15 +45,8 @@ async function scrape() {
     throw(error);
   }
 
-  return histories;
+  fs.writeFileSync(cacheFile, JSON.stringify(histories));
+  console.log('Done.');
 }
 
-scrape()
-  .then((srcLog) => {
-    fs.writeFileSync(cacheFile, JSON.stringify(srcLog));
-    console.log('Done.');
-  })
-  .catch(error => {
-    console.error('Failed:', error);
-    process.exit(1);
-  })
+scrape();
