@@ -16,35 +16,38 @@ async function notify(src) {
 }
 
 async function scrape() {
-  const srcs = await nightmare
-    .goto('https://tokubai.co.jp/%E6%96%87%E5%8C%96%E5%A0%82/4114')
-    .wait('a.leaflet_card')
-    .evaluate(() => {
-      const anchors = document.querySelectorAll('a.leaflet_card img');
-      let srcs = [];
-      anchors.forEach((element) => {
-        const imageSrc = element.src.replace('w=600,h=300,mc=true,wo=0,ho=0,cw=600,ch=300,aw=600', 'o=true');
-        srcs.push(imageSrc);
-      });
-      return srcs;
-    })
-    .end();
+  try {
+    const srcs = await nightmare
+      .goto('https://tokubai.co.jp/%E6%96%87%E5%8C%96%E5%A0%82/4114')
+      .wait('a.leaflet_card')
+      .evaluate(() => {
+        const anchors = document.querySelectorAll('a.leaflet_card img');
+        let srcs = [];
+        anchors.forEach((element) => {
+          const imageSrc = element.src.replace('w=600,h=300,mc=true,wo=0,ho=0,cw=600,ch=300,aw=600', 'o=true');
+          srcs.push(imageSrc);
+        });
+        return srcs;
+      })
+      .end();
 
-  if (!fs.existsSync(cacheFile)) await fs.writeFile(cacheFile, JSON.stringify([]));
-  const histories = require(cacheFile);
+    if (!fs.existsSync(cacheFile)) await fs.writeFile(cacheFile, JSON.stringify([]));
+    const histories = require(cacheFile);
 
-  await Promise.all(srcs.map((src) => {
-    if (histories.indexOf(src) == -1) {
-      histories.push(src);
-      console.log(`New leaflet: ${src}`);
-      return notify(src);
-    }
-  }));
+    await Promise.all(srcs.map((src) => {
+      if (histories.indexOf(src) == -1) {
+        histories.push(src);
+        console.log(`New leaflet: ${src}`);
+        return notify(src);
+      }
+    }));
+  } catch (error) {
+      throw(error);
+  }
 
   return histories;
 }
 
-console.log('hello');
 scrape()
   .then((srcLog) => {
     fs.writeFileSync(cacheFile, JSON.stringify(srcLog));
