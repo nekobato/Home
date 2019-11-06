@@ -16,6 +16,9 @@ async function notify(src) {
 }
 
 async function scrape() {
+  if (!fs.existsSync(cacheFile)) await fs.writeFile(cacheFile, JSON.stringify([]));
+  const histories = require(cacheFile);
+
   try {
     const srcs = await nightmare
       .goto('https://tokubai.co.jp/%E6%96%87%E5%8C%96%E5%A0%82/4114')
@@ -31,9 +34,6 @@ async function scrape() {
       })
       .end();
 
-    if (!fs.existsSync(cacheFile)) await fs.writeFile(cacheFile, JSON.stringify([]));
-    const histories = require(cacheFile);
-
     await Promise.all(srcs.map((src) => {
       if (histories.indexOf(src) == -1) {
         histories.push(src);
@@ -42,7 +42,7 @@ async function scrape() {
       }
     }));
   } catch (error) {
-      throw(error);
+    throw(error);
   }
 
   return histories;
@@ -52,9 +52,8 @@ scrape()
   .then((srcLog) => {
     fs.writeFileSync(cacheFile, JSON.stringify(srcLog));
     console.log('Done.');
-    process.exit(0);
   })
   .catch(error => {
-    console.error('Failed:', error)
+    console.error('Failed:', error);
     process.exit(1);
   })
