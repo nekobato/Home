@@ -20,6 +20,7 @@
   "dependencies": {
     "@slack/webhook": "^5.0.2",
     "fs-extra": "^8.1.0",
-    "nightmare": "^3.0.2"
+    "puppeteer": "^2.0.0",
+    "puppeteer-core": "^2.0.0"
   }
 }
